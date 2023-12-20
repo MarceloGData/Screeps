@@ -23,8 +23,16 @@ var roleRepairer = {
 
 
 	    if(creep.memory.repairing) {
-			var targets = creep.room.find(FIND_MY_STRUCTURES);
-			targets = targets.filter((target) => target.ticksToDecay < 300);
+			var targets = creep.room.find(FIND_STRUCTURES);
+			targets = targets.filter((target) =>target.hits < target.hitsMax)//(target.hitsMax/2));
+			targets_below_1M = targets.filter((target) => target.hits < 1000000)
+			
+			if(targets_below_1M.length > 0){
+				targets = targets_below_1M
+			}
+
+			//pegar o menor target.hits - target.hitsMax
+			// console.log(targets)
             if(targets.length) {
                 if(creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ff0000'}});

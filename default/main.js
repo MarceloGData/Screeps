@@ -20,7 +20,7 @@ module.exports.loop = function () {
             }
         }
         
-        console.log(role + ': ' + creeps.length);
+        // console.log(role + ': ' + creeps.length);
     }
 
     for(var name in Memory.creeps) {
@@ -36,17 +36,26 @@ module.exports.loop = function () {
     var repairers = _.filter(Game.creeps, (creep) => creep.memory.role == 'repairer');
 
     var harversters_limit = 4
-    var builders_limit = 5
-    var repairers_limit = 1
-    var upgraders_limit = 6
+    var builders_limit = 4
+    var repairers_limit = 2
+    var upgraders_limit = 1
 
-    if(harvesters.length < harversters_limit){
-        population_control(Game, harvesters, harversters_limit, 'harvester', [WORK,CARRY,MOVE, CARRY, MOVE])
-    }else if(builders.length < builders_limit || repairers.length < repairers_limit){
-        population_control(Game, builders, builders_limit, 'builder', [WORK,CARRY,MOVE,CARRY,MOVE])
-        population_control(Game, repairers, repairers_limit, 'repairer', [WORK,CARRY,MOVE,CARRY,MOVE])
+    console.log('harvester:\t' + harvesters.length + '/' + harversters_limit);
+    console.log('builder:\t' + builders.length + '/' + builders_limit);
+    console.log('repairer:\t' + repairers.length + '/' + repairers_limit);
+    console.log('upgrader:\t' + upgraders.length + '/' + upgraders_limit);
+
+    if(harvesters.length == 0){
+        population_control(Game, harvesters, harversters_limit, 'harvester', [WORK,CARRY,MOVE])
+    }else if(harvesters.length != harversters_limit && harvesters.length > 3){
+        population_control(Game, harvesters, harversters_limit, 'harvester', [WORK,WORK,CARRY,MOVE,CARRY,MOVE,CARRY,CARRY,MOVE])
+    }else if(harvesters.length != harversters_limit){
+        population_control(Game, harvesters, harversters_limit, 'harvester', [WORK,CARRY,MOVE,CARRY,MOVE])
+    }else if(builders.length != builders_limit || repairers.length != repairers_limit){
+        population_control(Game, builders, builders_limit, 'builder', [WORK,CARRY,MOVE,CARRY,MOVE,MOVE,MOVE])
+        population_control(Game, repairers, repairers_limit, 'repairer', [WORK,WORK,CARRY,MOVE,CARRY,MOVE,CARRY,CARRY,MOVE])
     }else{
-        population_control(Game, upgraders, upgraders_limit, 'upgrader', [WORK,CARRY,MOVE,MOVE,MOVE])
+        population_control(Game, upgraders, upgraders_limit, 'upgrader', [WORK,CARRY,WORK,CARRY,MOVE,MOVE])
     }
 
     if(Game.spawns['MyFirstSpawn'].spawning) { 
