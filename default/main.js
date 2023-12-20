@@ -36,9 +36,9 @@ module.exports.loop = function () {
     var repairers = _.filter(Game.creeps, (creep) => creep.memory.role == 'repairer');
 
     var harversters_limit = 4
-    var builders_limit = 4
-    var repairers_limit = 2
-    var upgraders_limit = 1
+    var builders_limit = 0
+    var repairers_limit = 5
+    var upgraders_limit = 10
 
     console.log('harvester:\t' + harvesters.length + '/' + harversters_limit);
     console.log('builder:\t' + builders.length + '/' + builders_limit);
