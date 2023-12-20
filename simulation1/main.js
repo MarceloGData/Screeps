@@ -10,7 +10,7 @@ module.exports.loop = function () {
         if(creeps.length < limit) {
             var newName = role + Game.time;
             // console.log('Spawning new '+role+': ' + newName);
-            Game.spawns['MyFirstSpawn'].spawnCreep(parts, newName, 
+            Game.spawns['Spawn1'].spawnCreep(parts, newName, 
                 {memory: {role: role}});
         }
     
@@ -22,6 +22,10 @@ module.exports.loop = function () {
         
         // console.log(role + ': ' + creeps.length);
     }
+
+    // Memory.temp = {}
+    // Memory.temp.path = path
+
 
     for(var name in Memory.creeps) {
         if(!Game.creeps[name]) {
@@ -35,7 +39,7 @@ module.exports.loop = function () {
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
     var repairers = _.filter(Game.creeps, (creep) => creep.memory.role == 'repairer');
 
-    var harversters_limit = 4
+    var harversters_limit = 1
     var builders_limit = 5
     var repairers_limit = 0
     var upgraders_limit = 10
@@ -58,12 +62,12 @@ module.exports.loop = function () {
         population_control(Game, upgraders, upgraders_limit, 'upgrader', [WORK,CARRY,WORK,CARRY,MOVE,MOVE])
     }
 
-    if(Game.spawns['MyFirstSpawn'].spawning) { 
-        var spawningCreep = Game.creeps[Game.spawns['MyFirstSpawn'].spawning.name];
-        Game.spawns['MyFirstSpawn'].room.visual.text(
+    if(Game.spawns['Spawn1'].spawning) { 
+        var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
+        Game.spawns['Spawn1'].room.visual.text(
             '🛠️' + spawningCreep.memory.role,
-            Game.spawns['MyFirstSpawn'].pos.x + 1, 
-            Game.spawns['MyFirstSpawn'].pos.y, 
+            Game.spawns['Spawn1'].pos.x + 1, 
+            Game.spawns['Spawn1'].pos.y, 
             {align: 'left', opacity: 0.8});
     }
 
@@ -87,3 +91,7 @@ module.exports.loop = function () {
         console.log('Room "'+name+'" has '+Game.rooms[name].energyAvailable+' energy');
     }
 }
+
+
+
+//var source = Math.ceil(sources.length*Math.random()) - 1
